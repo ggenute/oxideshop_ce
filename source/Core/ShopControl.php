@@ -497,7 +497,6 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
         return $outputManager->addVersionTags($output);
     }
 
-
     /**
      * @internal
      *
