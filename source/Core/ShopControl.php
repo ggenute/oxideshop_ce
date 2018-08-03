@@ -15,7 +15,6 @@ use oxOutput;
 use oxSystemComponentException;
 use PHPMailer;
 use ReflectionMethod;
-use Symfony\Component\Templating\TemplateNameParser;
 
 /**
  * Main shop actions controller. Processes user actions, logs
@@ -486,7 +485,6 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
        // $smarty->oxobject = $view;
 
         $output = $templating->renderTemplate($templateName, $viewData, $view->getViewId());
-
             //$smarty->fetch($templateName, $view->getViewId());
 
             //$smarty->fetch($templateName, $view->getViewId());
