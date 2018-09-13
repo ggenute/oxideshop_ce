@@ -9,6 +9,7 @@
 namespace OxidEsales\EshopCommunity\Internal\Twig;
 
 use OxidEsales\EshopCommunity\Internal\Templating\BaseEngineInterface;
+use OxidEsales\EshopCommunity\Internal\Twig\Extensions\MailtoExtension;
 
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Symfony\Component\Templating\TemplateReferenceInterface;
@@ -51,6 +52,8 @@ class TwigEngine implements BaseEngineInterface
         if ($this->engine->isDebug()) {
             $this->engine->addExtension(new \Twig_Extension_Debug());
         }
+
+        $this->engine->addExtension(new MailtoExtension());
     }
 
     /**
