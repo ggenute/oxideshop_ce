@@ -10,6 +10,15 @@ use Twig\TwigFunction;
  */
 class OxidExtension extends AbstractExtension
 {
+
+    /** @var \OxidEsales\Eshop\Core\Config */
+    private $config;
+
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * {@inheritdoc}
      */
