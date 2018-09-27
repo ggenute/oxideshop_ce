@@ -5,6 +5,8 @@ services:
     public: false
 
 # TemplateLogic
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputhelpLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputhelpLogic
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SeoUrlLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SeoUrlLogic

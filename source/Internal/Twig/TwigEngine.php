@@ -43,8 +43,9 @@ class TwigEngine implements BaseEngineInterface
      *
      * @param Environment                 $engine
      * @param TemplateNameParserInterface $parser
+     * @param OxidExtension $oxidExtension
      */
-    public function __construct(Environment $engine, TemplateNameParserInterface $parser)
+    public function __construct(Environment $engine, TemplateNameParserInterface $parser, OxidExtension $oxidExtension)
     {
         $this->engine = $engine;
         $this->parser = $parser;
