@@ -16,3 +16,6 @@ services:
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\AssignAdvancedLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\AssignAdvancedLogic
+# TemplateLogic
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputhelpLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputhelpLogic
