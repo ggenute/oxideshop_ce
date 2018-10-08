@@ -8,6 +8,7 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Application\Controller;
 
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\ViewConfig;
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Application\Model\CountryList;
 use oxTestModules;
 use stdClass;
@@ -2190,7 +2191,7 @@ class ViewConfigTest extends \OxidTestCase
     public function testGetActiveTheme_mainTheme()
     {
         $oViewConf = oxNew('oxViewConfig');
-        $oViewConf->getConfig()->setConfigParam("sTheme", "testTheme");
+        Registry::getConfig()->setConfigParam("sTheme", "testTheme");
         $this->assertEquals('testTheme', $oViewConf->getActiveTheme());
     }
 
@@ -2200,8 +2201,8 @@ class ViewConfigTest extends \OxidTestCase
     public function testGetActiveTheme_customTheme()
     {
         $oViewConf = oxNew('oxViewConfig');
-        $oViewConf->getConfig()->setConfigParam("sCustomTheme", "testCustomTheme");
-        $oViewConf->getConfig()->setConfigParam("sTheme", "testTheme");
+        Registry::getConfig()->setConfigParam("sCustomTheme", "testCustomTheme");
+        Registry::getConfig()->setConfigParam("sTheme", "testTheme");
         $this->assertEquals('testCustomTheme', $oViewConf->getActiveTheme());
     }
 
