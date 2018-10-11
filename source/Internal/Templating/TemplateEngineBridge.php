@@ -6,44 +6,22 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Templating;
 
+use Symfony\Component\Templating\DelegatingEngine;
+
 /**
  * Class TemplateEngineBridge
  */
-class TemplateEngineBridge implements TemplateEngineBridgeInterface
+class TemplateEngineBridge extends DelegatingEngine implements TemplateEngineBridgeInterface
 {
-    /**
-     * @var BaseEngineInterface
-     */
-    private $templateEngine;
-
-    /**
-     * TemplateEngineBridge constructor.
-     *
-     * @param BaseEngineInterface $templateEngine
-     */
-    public function __construct(BaseEngineInterface $templateEngine)
-    {
-        $this->templateEngine = $templateEngine;
-    }
-
-    /**
-     * Checks if file exists.
-     *
-     * @param string $name The template name
-     *
-     * @return bool
-     */
-    public function exists($name)
-    {
-        return $this->templateEngine->exists($name);
-    }
+    private $fallbackEngine;
 
     /**
      * @return BaseEngineInterface
      */
-    public function getEngine()
+    public function getEngineInstance()
     {
-        return $this->templateEngine;
+        $this->defineDefaultEngine();
+        return $this->fallbackEngine;
     }
 
     /**
@@ -55,9 +33,29 @@ class TemplateEngineBridge implements TemplateEngineBridgeInterface
      */
     public function renderTemplate($templateName, $viewData, $cacheId = null)
     {
-        $templating = $this->templateEngine;
+        $templating = $this->getEngine($templateName);
         $templating->setCacheId($cacheId);
 
         return $templating->render($templateName, $viewData);
+    }
+
+    public function getEngine($name)
+    {
+        $this->defineDefaultEngine();
+        try {
+            $engine = parent::getEngine($name);
+        } catch (\RuntimeException $e) {
+            $engine = $this->fallbackEngine;
+        }
+        return $engine;
+    }
+
+    private function defineDefaultEngine()
+    {
+        if (isset($this->engines[0])) {
+            $this->fallbackEngine = $this->engines[0];
+        } else {
+            throw new \RuntimeException('No engine was registered');
+        }
     }
 }

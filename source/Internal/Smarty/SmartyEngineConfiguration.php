@@ -1,13 +1,14 @@
 <?php
 /**
- * Copyright © OXID eSales AG. All rights reserved.
- * See LICENSE file for license details.
+ * Created by PhpStorm.
+ * User: vilma
+ * Date: 06.08.18
+ * Time: 16:02
  */
 
 namespace OxidEsales\EshopCommunity\Internal\Smarty;
 
-use OxidEsales\EshopCommunity\Internal\Smarty\Extension\CacheResourcePlugin;
-use OxidEsales\EshopCommunity\Internal\Smarty\Extension\SmartyDefaultTemplateHandler;
+use OxidEsales\EshopCommunity\Internal\Smarty\Extensions\oxSmarty;
 
 /**
  * Class SmartyEngineConfiguration
@@ -45,7 +46,7 @@ class SmartyEngineConfiguration implements TemplateEngineConfigurationInterface
             'cache_dir' => $this->context->getTemplateCompileDirectory(),
             'template_dir' => $this->context->getTemplateDirectories(),
             'compile_id' => $this->context->getTemplateCompileId(),
-            'default_template_handler_func' => [new SmartyDefaultTemplateHandler($this->context), 'handleTemplate'],
+            'default_template_handler_func' => [oxSmarty::getInstance($this->context), '_smartyDefaultTemplateHandler'],
             'debugging' => $this->context->getTemplateEngineDebugMode(),
             'compile_check' => $this->context->getTemplateCompileCheck()
         ];
@@ -109,13 +110,13 @@ class SmartyEngineConfiguration implements TemplateEngineConfigurationInterface
      */
     public function getResources()
     {
-        $resource = new CacheResourcePlugin($this->context);
+        $oxSmarty = oxSmarty::getInstance($this->context);
         return ['ox' => [
-                    $resource,
-                    'getTemplate',
-                    'getTimestamp',
-                    'getSecure',
-                    'getTrusted'
+                    $oxSmarty,
+                    'ox_get_template',
+                    'ox_get_timestamp',
+                    'ox_get_secure',
+                    'ox_get_trusted'
                     ]
                 ];
     }

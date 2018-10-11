@@ -6,22 +6,17 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Templating;
 
+use Symfony\Component\Templating\EngineInterface;
+
 /**
  * Interface TemplateEngineBridgeInterface
  */
-interface TemplateEngineBridgeInterface
+interface TemplateEngineBridgeInterface extends EngineInterface
 {
-    /**
-     * @param string $name The template name
-     *
-     * @return bool
-     */
-    public function exists($name);
-
     /**
      * @return BaseEngineInterface
      */
-    public function getEngine();
+    public function getEngineInstance();
 
     /**
      * @param string $templateName The template name

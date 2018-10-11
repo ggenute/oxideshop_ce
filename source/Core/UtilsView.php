@@ -198,7 +198,7 @@ class UtilsView extends \OxidEsales\Eshop\Core\Base
         $templating = $this->getContainer()->get(TemplateEngineBridgeInterface::class);
 
         // save old tpl data
-        $smarty = clone $templating->getEngine();
+        $smarty = clone $templating->getEngineInstance();
         $tplVars = $smarty->_tpl_vars;
         $forceRecompile = $smarty->force_compile;
 

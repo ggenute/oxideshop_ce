@@ -63,7 +63,7 @@ class WidgetControlTest extends \OxidTestCase
         $oControl->UNITrunLast();
 
         $this->assertEquals(array($view1), $oConfig->getActiveViewsList());
-        $globals = $template->getEngine()->getGlobals();
+        $globals = $template->getEngineInstance()->getGlobals();
         $this->assertEquals($view1, $globals["oView"]);
     }
 

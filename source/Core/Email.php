@@ -1059,14 +1059,14 @@ class Email extends \PHPMailer
         $this->_processViewArray();
 
         // #1469 - we need to patch security here as we do not use standard template dir, so smarty stops working
-        $store['INCLUDE_ANY'] = $templating->getEngine()->security_settings['INCLUDE_ANY'];
+        $store['INCLUDE_ANY'] = $templating->getEngineInstance()->security_settings['INCLUDE_ANY'];
         //V send email in order language
         $oldTplLang = $lang->getTplLanguage();
         $oldBaseLang = $lang->getTplLanguage();
         $lang->setTplLanguage($orderLang);
         $lang->setBaseLanguage($orderLang);
 
-        $templating->getEngine()->security_settings['INCLUDE_ANY'] = true;
+        $templating->getEngineInstance()->security_settings['INCLUDE_ANY'] = true;
         // force non admin to get correct paths (tpl, img)
         $myConfig->setAdminMode(false);
         $this->setBody($templating->renderTemplate($this->_sSenedNowTemplate, $this->getViewData()));
@@ -1075,7 +1075,7 @@ class Email extends \PHPMailer
         $lang->setTplLanguage($oldTplLang);
         $lang->setBaseLanguage($oldBaseLang);
         // set it back
-        $templating->getEngine()->security_settings['INCLUDE_ANY'] = $store['INCLUDE_ANY'];
+        $templating->getEngineInstance()->security_settings['INCLUDE_ANY'] = $store['INCLUDE_ANY'];
 
         //Sets subject to email
         $this->setSubject(($subject !== null) ? $subject : $shop->oxshops__oxsendednowsubject->getRawValue());
@@ -1122,14 +1122,14 @@ class Email extends \PHPMailer
         $this->_processViewArray();
 
         // #1469 - we need to patch security here as we do not use standard template dir, so smarty stops working
-        $store['INCLUDE_ANY'] = $templating->getEngine()->security_settings['INCLUDE_ANY'];
+        $store['INCLUDE_ANY'] = $templating->getEngineInstance()->security_settings['INCLUDE_ANY'];
         //V send email in order language
         $oldTplLang = $lang->getTplLanguage();
         $oldBaseLang = $lang->getTplLanguage();
         $lang->setTplLanguage($orderLang);
         $lang->setBaseLanguage($orderLang);
 
-        $templating->getEngine()->security_settings['INCLUDE_ANY'] = true;
+        $templating->getEngineInstance()->security_settings['INCLUDE_ANY'] = true;
         // force non admin to get correct paths (tpl, img)
         $myConfig->setAdminMode(false);
         $this->setBody($templating->renderTemplate($this->_sSendDownloadsTemplate, $this->getViewData()));
@@ -1138,7 +1138,7 @@ class Email extends \PHPMailer
         $lang->setTplLanguage($oldTplLang);
         $lang->setBaseLanguage($oldBaseLang);
         // set it back
-        $templating->getEngine()->security_settings['INCLUDE_ANY'] = $store['INCLUDE_ANY'];
+        $templating->getEngineInstance()->security_settings['INCLUDE_ANY'] = $store['INCLUDE_ANY'];
 
         //Sets subject to email
         $this->setSubject(($subject !== null) ? $subject : $lang->translateString("DOWNLOAD_LINKS", null, false));
