@@ -3,6 +3,7 @@
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
 namespace OxidEsales\EshopCommunity\Internal\Twig\Extensions;
 
 use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputhelpLogic;
@@ -16,16 +17,23 @@ use Twig\TwigFunction;
 class InputhelpExtension extends AbstractExtension
 {
 
-    /** @var TwigEngine */
+    /**
+     * @var InputhelpLogic
+     */
     private $inputhelpLogic;
 
+    /**
+     * InputhelpExtension constructor.
+     *
+     * @param InputhelpLogic $inputhelpLogic
+     */
     public function __construct(InputhelpLogic $inputhelpLogic)
     {
         $this->inputhelpLogic = $inputhelpLogic;
     }
 
     /**
-     * {@inheritdoc}
+     * @return array|\Twig_Function[]
      */
     public function getFunctions()
     {
@@ -35,16 +43,27 @@ class InputhelpExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @param string $sIdent
+     *
+     * @return mixed
+     */
     public function getSHelpId($sIdent)
     {
         $getInputhelpParameters = $this->inputhelpLogic->getInputhelpParameters(['ident' => $sIdent]);
+
         return $getInputhelpParameters['sIdent'];
     }
 
+    /**
+     * @param string $sIdent
+     *
+     * @return mixed
+     */
     public function getSHelpText($sIdent)
     {
         $getInputhelpParameters = $this->inputhelpLogic->getInputhelpParameters(['ident' => $sIdent]);
+
         return $getInputhelpParameters['sTranslation'];
     }
-
 }
