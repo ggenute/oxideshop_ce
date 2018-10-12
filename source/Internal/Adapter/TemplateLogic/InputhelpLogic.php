@@ -15,11 +15,12 @@ class InputhelpLogic
 
         try {
             $sTranslation = $oLang->translateString($sIdent, $iLang, $blAdmin);
-        } catch(\OxidEsales\Eshop\Core\Exception\LanguageException $oEx) {
+        } catch (\OxidEsales\Eshop\Core\Exception\LanguageException $oEx) {
             // is thrown in debug mode and has to be caught here, as smarty hangs otherwise!
         }
 
         $return = ['sIdent' => $sIdent, 'sTranslation' => $sTranslation];
+
         return $return;
     }
 

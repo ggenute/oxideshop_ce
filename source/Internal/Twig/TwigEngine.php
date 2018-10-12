@@ -43,7 +43,7 @@ class TwigEngine implements BaseEngineInterface
      *
      * @param Environment                 $engine
      * @param TemplateNameParserInterface $parser
-     * @param OxidExtension $oxidExtension
+     * @param OxidExtension               $oxidExtension
      */
     public function __construct(Environment $engine, TemplateNameParserInterface $parser, OxidExtension $oxidExtension)
     {
