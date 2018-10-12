@@ -2,9 +2,19 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic;
 
+/**
+ * Class InputhelpLogic
+ *
+ * @package OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic
+ */
 class InputhelpLogic
 {
 
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
     public function getInputhelpParameters($params)
     {
         $sIdent = $params['ident'];
@@ -23,5 +33,4 @@ class InputhelpLogic
 
         return $return;
     }
-
 }
