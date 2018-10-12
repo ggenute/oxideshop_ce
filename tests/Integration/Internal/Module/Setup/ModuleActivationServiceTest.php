@@ -68,7 +68,6 @@ class ModuleActivationServiceTest extends TestCase
                 'secondSmartyDirectory',
             ]
         ))
-        /**
         ->setSetting(new ModuleSetting(
             'extend',
             [
@@ -76,6 +75,7 @@ class ModuleActivationServiceTest extends TestCase
                 'otherOriginalClassNamespace' => 'moduleClassNamespace',
             ]
         ))
+        /**
         ->setSetting(new ModuleSetting(
             'events',
             [
