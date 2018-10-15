@@ -9,8 +9,9 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Application\Model;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Application\Model\Article;
 use OxidEsales\EshopCommunity\Application\Model\Vendor;
-use oxRegistry;
-use oxTestModules;
+use \oxRegistry;
+use \oxTestModules;
+use \oxField;
 
 /**
  * Testing oxvendor class
@@ -380,7 +381,7 @@ class VendorTest extends \OxidTestCase
     public function testGetIconUrlNewPath()
     {
         $vendor = oxNew(Vendor::class);
-        $vendor->getConfig()->setConfigParam('sManufacturerIconsize', '100*100');
+        Registry::getConfig()->setConfigParam('sManufacturerIconsize', '100*100');
         $vendor->oxvendor__oxicon = new oxField('big_matsol_1_mico.png');
 
         $sUrl = $vendor->getConfig()->getOutUrl() . basename($vendor->getConfig()->getPicturePath(''));

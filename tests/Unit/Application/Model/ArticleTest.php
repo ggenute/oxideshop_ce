@@ -5,6 +5,7 @@
  */
 namespace OxidEsales\EshopCommunity\Tests\Unit\Application\Model;
 
+use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\ShopIdCalculator;
 use OxidEsales\EshopCommunity\Core\DatabaseProvider;
@@ -5745,7 +5746,7 @@ class ArticleTest extends \OxidTestCase
         $oConfig->expects($this->never())->method('getPictureUrl');
 
         $oArticle = $this->getProxyClass("oxarticle");
-        $oArticle->setConfig($oConfig);
+        Registry::set(Config::class, $oConfig);
 
         $this->assertNull($oArticle->getPictureUrl(0));
     }
@@ -5820,7 +5821,7 @@ class ArticleTest extends \OxidTestCase
         $oConfig->expects($this->never())->method('getPictureUrl');
 
         $oArticle = $this->getProxyClass("oxarticle");
-        $oArticle->setConfig($oConfig);
+        Registry::set(Config::class, $oConfig);
 
         $this->assertNull($oArticle->getZoomPictureUrl());
     }
@@ -6496,7 +6497,7 @@ class ArticleTest extends \OxidTestCase
         $oConfig->expects($this->any())->method('getMasterPicturePath')->with($this->equalTo('product/1/testPic1.jpg'))->will($this->returnValue(false));
 
         $oArticle = $this->getProxyClass("oxarticle");
-        $oArticle->setConfig($oConfig);
+        Registry::set(Config::class, $oConfig);
         $oArticle->oxarticles__oxpic1 = new oxField('testPic1.jpg');
 
         $this->assertFalse($oArticle->UNIThasMasterImage(1));
@@ -6514,7 +6515,7 @@ class ArticleTest extends \OxidTestCase
         $oConfig->expects($this->never())->method('getMasterPicturePath');
 
         $oArticle = $this->getProxyClass("oxarticle");
-        $oArticle->setConfig($oConfig);
+        Registry::set(Config::class, $oConfig);
         $oArticle->oxarticles__oxpic1 = new oxField('nopic.jpg');
 
         $this->assertFalse($oArticle->UNIThasMasterImage(1));
@@ -6532,7 +6533,7 @@ class ArticleTest extends \OxidTestCase
         $oConfig->expects($this->never())->method('getMasterPicturePath');
 
         $oArticle = $this->getProxyClass("oxarticle");
-        $oArticle->setConfig($oConfig);
+        Registry::set(Config::class, $oConfig);
         $oArticle->oxarticles__oxpic1 = new oxField('');
 
         $this->assertFalse($oArticle->UNIThasMasterImage(1));
@@ -6550,7 +6551,7 @@ class ArticleTest extends \OxidTestCase
         $oConfig->expects($this->at(1))->method('getMasterPicturePath')->with($this->equalTo('product/2/testPic2.jpg'))->will($this->returnValue(true));
 
         $oArticle = $this->getProxyClass("oxarticle");
-        $oArticle->setConfig($oConfig);
+        Registry::set(Config::class, $oConfig);
         $oArticle->oxarticles__oxpic1 = new oxField('testPic1.jpg');
         $oArticle->oxarticles__oxpic2 = new oxField('2/testPic2.jpg');
 
@@ -6569,13 +6570,12 @@ class ArticleTest extends \OxidTestCase
         $oConfig->expects($this->any())->method('getMasterPicturePath')->will($this->returnValue(true));
 
         $oArticle = $this->getProxyClass("oxArticle");
-        $oArticle->setConfig($oConfig);
+        Registry::set(Config::class, $oConfig);
         $oArticle->oxarticles__oxpic1 = new oxField('testPic1.jpg', oxField::T_RAW);
 
         $oArticle2 = $this->getMock($this->getProxyClassName("oxArticle"), array("isVariant", "getParentArticle"));
         $oArticle2->expects($this->any())->method('isVariant')->will($this->returnValue(true));
         $oArticle2->expects($this->any())->method('getParentArticle')->will($this->returnValue($oArticle));
-        $oArticle2->setConfig($oConfig);
         $oArticle2->oxarticles__oxpic1 = new oxField('testPic1.jpg');
 
         $this->assertFalse($oArticle2->UNIThasMasterImage(1));

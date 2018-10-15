@@ -51,7 +51,7 @@ class WidgetControlTest extends \OxidTestCase
 
 
         $oControl = $this->getMock(\OxidEsales\Eshop\Core\WidgetControl::class, array("getConfig"));
-        $oControl->expects($this->any())->method('getConfig')->will($this->returnValue($oConfig));
+		\OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $oConfig);
 
         $oControl->UNITrunLast();
 
