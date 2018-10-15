@@ -171,7 +171,7 @@ class BasketTest extends \OxidTestCase
         $oConf = $this->getMock('stdclass', array('getConfigParam'));
         $oConf->expects($this->exactly(1))->method('getConfigParam')->with($this->equalTo('iNewBasketItemMessage'))->will($this->returnValue(3));
         $o = $this->getMock(\OxidEsales\Eshop\Application\Controller\BasketController::class, array('getConfig'));
-        $o->expects($this->exactly(1))->method('getConfig')->will($this->returnValue($oConf));
+        \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $oConf);
         $this->assertSame(null, $o->backToShop());
 
         $this->assertSame('', oxRegistry::getSession()->getVariable('_backtoshop'));

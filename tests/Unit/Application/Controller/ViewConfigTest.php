@@ -168,7 +168,7 @@ class ViewConfigTest extends \OxidTestCase
         $oCfg->expects($this->at(2))->method('getActiveView')->will($this->returnValue($oView));
 
         $oVC = $this->getMock(\OxidEsales\Eshop\Core\ViewConfig::class, array('getConfig'));
-        $oVC->expects($this->once())->method('getConfig')->will($this->returnValue($oCfg));
+        \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $oCfg);
         $this->assertFalse($oVC->getShowCompareList());
     }
 
@@ -501,7 +501,7 @@ class ViewConfigTest extends \OxidTestCase
 
         /** @var oxViewConfig|PHPUnit\Framework\MockObject\MockObject $viewConfig */
         $viewConfig = $this->getMock(\OxidEsales\Eshop\Core\ViewConfig::class, array('getConfig'));
-        $viewConfig->expects($this->any())->method('getConfig')->will($this->returnValue($config));
+        \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $config);
         $fakeShopDirectory = $config->getConfigParam('sShopDir');
         $this->assertEquals($fakeShopDirectory . "modules/test1/out", $viewConfig->getModulePath('test1', 'out'));
         $this->assertEquals($fakeShopDirectory . "modules/test1/out/", $viewConfig->getModulePath('test1', '/out/'));
@@ -554,7 +554,7 @@ class ViewConfigTest extends \OxidTestCase
 
         /** @var \OxidEsales\EshopEnterprise\Core\ViewConfig|PHPUnit\Framework\MockObject\MockObject $viewConfig */
         $viewConfig = $this->getMock(\OxidEsales\Eshop\Core\ViewConfig::class, array('getConfig'));
-        $viewConfig->expects($this->any())->method('getConfig')->will($this->returnValue($config));
+        \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $config);
 
         $this->assertEquals('', $viewConfig->getModulePath('test1', '/out/blocks/non_existing_template.tpl'));
 
@@ -637,7 +637,7 @@ class ViewConfigTest extends \OxidTestCase
 
         /** @var \OxidEsales\Eshop\Core\ViewConfig|PHPUnit\Framework\MockObject\MockObject $viewConfig */
         $viewConfig = $this->getMock(\OxidEsales\Eshop\Core\ViewConfig::class, array('getConfig'));
-        $viewConfig->expects($this->any())->method('getConfig')->will($this->returnValue($config));
+        \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $config);
 
         $viewConfig->getModuleUrl('test1', '/out/blocks/non_existing_template.tpl');
     }

@@ -345,7 +345,7 @@ class ViewTest extends \OxidTestCase
         $config->expects($this->never())->method('getShopUrl');
 
         $view = $this->getMock(\OxidEsales\Eshop\Core\Controller\BaseController::class, array('getConfig'));
-        $view->expects($this->once())->method('getConfig')->will($this->returnValue($config));
+        \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $config);
 
         $this->expectException('oxSystemComponentException'); $this->expectExceptionMessage( 'ERROR_MESSAGE_SYSTEMCOMPONENT_CLASSNOTFOUND' . ' testAction');
         $view->_executeNewAction("testAction");

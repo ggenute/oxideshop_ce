@@ -1454,7 +1454,7 @@ class UBaseTest extends \OxidTestCase
         $userBase->expects($this->any())->method('_canRedirect')->will($this->returnValue(false));
         $userBase->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
         $userBase->expects($this->once())->method('_forceNoIndex');
-        $userBase->expects($this->any())->method('getConfig')->will($this->returnValue($config));
+        \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $config);
 
         $userBase->UNITprocessRequest();
 

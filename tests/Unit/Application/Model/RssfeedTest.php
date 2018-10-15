@@ -437,7 +437,7 @@ class RssfeedTest extends \OxidTestCase
         $oCfg->expects($this->any())->method('getShopUrl')->will($this->returnValue('http://homeurl/'));
 
         $oRss = $this->getMock(\OxidEsales\Eshop\Application\Model\RssFeed::class, array('getConfig'));
-        $oRss->expects($this->any())->method('getConfig')->will($this->returnValue($oCfg));
+        \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $oCfg);
 
         Registry::set(Config::class, $oCfg);
 
