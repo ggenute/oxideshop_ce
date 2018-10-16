@@ -29,7 +29,7 @@ class ModuleActivateCommandTest extends TestCase
         $moduleId = 'testmodule';
         $consoleOutput = $this->execute(
             $this->getApplication(),
-            $this->get('console.commands_collection_builder'),
+            $this->get('oxid_esales.console.commands_collection_builder'),
             new ArrayInput(['command' => 'oe:module:activate', 'module-id' => $moduleId])
         );
 
@@ -52,7 +52,7 @@ class ModuleActivateCommandTest extends TestCase
         $moduleId = 'testmodule';
         $consoleOutput = $this->execute(
             $this->getApplication(),
-            $this->get('console.commands_collection_builder'),
+            $this->get('oxid_esales.console.commands_collection_builder'),
             new ArrayInput(['command' => 'oe:module:activate', 'module-id' => $moduleId])
         );
 
@@ -66,7 +66,7 @@ class ModuleActivateCommandTest extends TestCase
         $moduleId = 'test';
         $consoleOutput = $this->execute(
             $this->getApplication(),
-            $this->get('console.commands_collection_builder'),
+            $this->get('oxid_esales.console.commands_collection_builder'),
             new ArrayInput(['command' => 'oe:module:activate', 'module-id' => $moduleId])
         );
 
@@ -92,7 +92,7 @@ class ModuleActivateCommandTest extends TestCase
      */
     private function getApplication(): Application
     {
-        $application = $this->get('symfony.component.console.application');
+        $application = $this->get('oxid_esales.console.symfony.component.console.application');
         $application->setAutoExit(false);
 
         return $application;
