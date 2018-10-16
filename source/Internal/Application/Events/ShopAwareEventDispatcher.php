@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Application\Events;
 
+use OxidEsales\EshopCommunity\Internal\Application\ShopAwareServiceInterface;
 use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\EventDispatcher\Event;
 
@@ -27,7 +28,7 @@ class ShopAwareEventDispatcher extends ContainerAwareEventDispatcher
             }
             if (is_array($listener) &&
                 is_object($listener[0]) &&
-                in_array(ShopAwareEventSubscriberInterface::class, class_implements($listener[0])) &&
+                in_array(ShopAwareServiceInterface::class, class_implements($listener[0])) &&
                 ! $listener[0]->isActive()) {
                     continue;
             }

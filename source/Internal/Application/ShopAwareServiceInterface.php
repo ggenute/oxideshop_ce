@@ -4,14 +4,14 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Internal\Application\Events;
+namespace OxidEsales\EshopCommunity\Internal\Application;
 
 use OxidEsales\EshopCommunity\Internal\Utility\ContextInterface;
 
 /**
- * Interface ShopAwareEventSubscriberInterface
+ * Defines necessary methods for classes to be Shop aware.
  */
-interface ShopAwareEventSubscriberInterface
+interface ShopAwareServiceInterface
 {
     /**
      * This method is used by the DI container

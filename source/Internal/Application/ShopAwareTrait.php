@@ -4,15 +4,11 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Internal\Application\Events;
+namespace OxidEsales\EshopCommunity\Internal\Application;
 
 use OxidEsales\EshopCommunity\Internal\Utility\ContextInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class ShopAwareEventSubscriber
- */
-abstract class ShopAwareEventSubscriber implements EventSubscriberInterface, ShopAwareEventSubscriberInterface
+trait ShopAwareTrait
 {
     /**
      * @var ContextInterface
