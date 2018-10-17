@@ -485,7 +485,6 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
        // $smarty->oxobject = $view;
 
         $output = $templating->renderTemplate($templateName, $viewData, $view->getViewId());
-            //$smarty->fetch($templateName, $view->getViewId());
 
             //$smarty->fetch($templateName, $view->getViewId());
 
