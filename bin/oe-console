@@ -5,24 +5,37 @@
  * See LICENSE file for license details.
  */
 
-$bootstrapFileExist = false;
-$bootstrapFiles = [
-    __DIR__ . '/../source/bootstrap.php',
-    __DIR__ . '/../../source/bootstrap.php',
-    __DIR__ . '/../../../source/bootstrap.php',
-    __DIR__ . '/../../../../source/bootstrap.php',
+use OxidEsales\EshopCommunity\Core\ShopIdCalculator;
+use OxidEsales\EshopCommunity\Internal\Console\ShopBootstrapper;
+use OxidEsales\EshopEnterprise\Internal\Console\CommandEventSubscriber;
+use Symfony\Component\Console\Input\ArgvInput;
+
+$autoloadFileExist = false;
+$autoloadFiles = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../vendor/autoload.php',
+    __DIR__ . '/../../../vendor/autoload.php',
+    __DIR__ . '/../../../../vendor/autoload.php',
 ];
-foreach ($bootstrapFiles as $bootstrapFile) {
-    if (file_exists($bootstrapFile)) {
-        require_once $bootstrapFile;
-        $bootstrapFileExist = true;
+foreach ($autoloadFiles as $autoloadFile) {
+    if (file_exists($autoloadFile)) {
+        require_once $autoloadFile;
+        $autoloadFileExist = true;
         break;
     }
 }
 
-if (!$bootstrapFileExist) {
-    exit("bootstrap.php file was not found!");
+if (!$autoloadFileExist) {
+    exit("autoload.php file was not found!");
 }
+
+$shopId = (int) (new ArgvInput())->getParameterOption(
+    '--'.CommandEventSubscriber::SHOP_ID_PARAMETER_OPTION_NAME,
+    ShopIdCalculator::BASE_SHOP_ID
+);
+$shopId = $shopId === 0 ? ShopIdCalculator::BASE_SHOP_ID : $shopId;
+
+(new ShopBootstrapper())->bootstrap($shopId);
 
 $factory = \OxidEsales\EshopCommunity\Internal\Application\ContainerFactory::getInstance();
 $factory->getContainer()->get(OxidEsales\EshopCommunity\Internal\Console\ExecutorInterface::class)->execute();
