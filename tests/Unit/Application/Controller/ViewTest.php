@@ -411,13 +411,14 @@ class ViewTest extends \OxidTestCase
         oxAddClassModule("oxUtilsHelper", "oxutils");
 
         $config = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isSsl', 'getSslShopUrl', 'getShopUrl'));
+        $config->setConfigParam('sAdminSSLURL', '');
         $config->expects($this->once())->method('isSsl')->will($this->returnValue(true));
         $config->expects($this->once())->method('getSslShopUrl')->will($this->returnValue('SSLshopurl/'));
         $config->expects($this->never())->method('getShopUrl');
         $config->setConfigParam('sAdminDir', 'admin');
 
-        $oView = $this->getMock(\OxidEsales\Eshop\Core\Controller\BaseController::class, array('getConfig', 'isAdmin'));
-        $oView->expects($this->once())->method('getConfig')->will($this->returnValue($config));
+        $oView = $this->getMock(\OxidEsales\Eshop\Core\Controller\BaseController::class, array('isAdmin'));
+        \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $config);
         $oView->expects($this->once())->method('isAdmin')->will($this->returnValue(true));
         $oView->UNITexecuteNewAction("details?fnc=somefnc&anid=someanid");
         $this->assertEquals('SSLshopurl/admin/index.php?cl=details&fnc=somefnc&anid=someanid&' . $this->getSession()->sid(), oxUtilsHelper::$sRedirectUrl);
