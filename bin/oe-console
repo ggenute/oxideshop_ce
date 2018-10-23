@@ -5,7 +5,6 @@
  * See LICENSE file for license details.
  */
 
-use OxidEsales\EshopCommunity\Core\ShopIdCalculator;
 use OxidEsales\EshopCommunity\Internal\Console\ShopBootstrapper;
 use OxidEsales\EshopEnterprise\Internal\Console\CommandEventSubscriber;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -31,10 +30,8 @@ if (!$autoloadFileExist) {
 
 $shopId = (int) (new ArgvInput())->getParameterOption(
     '--'.CommandEventSubscriber::SHOP_ID_PARAMETER_OPTION_NAME,
-    ShopIdCalculator::BASE_SHOP_ID
+    0
 );
-$shopId = $shopId === 0 ? ShopIdCalculator::BASE_SHOP_ID : $shopId;
-
 (new ShopBootstrapper())->bootstrap($shopId);
 
 $factory = \OxidEsales\EshopCommunity\Internal\Application\ContainerFactory::getInstance();

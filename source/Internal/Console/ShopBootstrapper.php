@@ -19,7 +19,9 @@ class ShopBootstrapper
      */
     public function bootstrap(int $shopId)
     {
-        $_POST['shp'] = $shopId;
+        if ($shopId !== 0) {
+            $_POST['shp'] = $shopId;
+        }
         $bootstrapFilePath = Path::join((new Facts())->getSourcePath(), 'bootstrap.php');
         require_once $bootstrapFilePath;
     }
