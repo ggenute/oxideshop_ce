@@ -34,11 +34,17 @@ class ContainerBuilder
     private $facts;
 
     /**
+     * @var ComponentServiceFilesProvider
+     */
+    private $componentServiceFilesProvider;
+
+    /**
      * @param Facts $facts
      */
-    public function __construct(Facts $facts)
+    public function __construct(Facts $facts, ComponentServiceFilesProvider $componentServiceFilesProvider)
     {
         $this->facts = $facts;
+        $this->componentServiceFilesProvider = $componentServiceFilesProvider;
     }
 
     /**
@@ -58,6 +64,7 @@ class ContainerBuilder
             $this->loadEditionServices($symfonyContainer, $this->facts->getEnterpriseEditionRootPath());
         }
         $this->loadProjectServices($symfonyContainer);
+        $this->loadComponentServices($symfonyContainer);
 
         return $symfonyContainer;
     }
@@ -98,5 +105,20 @@ class ContainerBuilder
     {
         $servicesLoader = new YamlFileLoader($symfonyContainer, new FileLocator($editionPath));
         $servicesLoader->load('Internal/Application/services.yaml');
+    }
+
+    /**
+     * @param SymfonyContainerBuilder $symfonyContainer
+     */
+    private function loadComponentServices(SymfonyContainerBuilder $symfonyContainer)
+    {
+        try {
+            foreach ($this->componentServiceFilesProvider->getServiceFiles() as $serviceFile) {
+                $loader = new YamlFileLoader($symfonyContainer, new FileLocator());
+                $loader->load($serviceFile);
+            }
+        } catch (\Exception $e) {
+            // pass
+        }
     }
 }

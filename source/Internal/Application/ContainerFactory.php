@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\EshopCommunity\Internal\Application;
 
+use Composer\IO\NullIO;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Facts\Facts;
 use Psr\Container\ContainerInterface;
@@ -80,7 +81,12 @@ class ContainerFactory
      */
     private function getCompiledSymfonyContainer()
     {
-        $containerBuilder = new ContainerBuilder(new Facts());
+        $composer = \Composer\Factory::create(new NullIO());
+        $repositoryManager = $composer->getRepositoryManager();
+        $containerBuilder = new ContainerBuilder(
+            new Facts(),
+            new ComponentServiceFilesProvider($repositoryManager->getLocalRepository())
+        );
         $this->symfonyContainer = $containerBuilder->getContainer();
         $this->symfonyContainer->compile();
     }

@@ -7,6 +7,7 @@
 namespace OxidEsales\EshopCommunity\Internal\Application;
 
 use Composer\Repository\WritableRepositoryInterface;
+use Webmozart\PathUtil\Path;
 
 /**
  * Provides list of components service files.
@@ -14,6 +15,8 @@ use Composer\Repository\WritableRepositoryInterface;
  */
 class ComponentServiceFilesProvider
 {
+    const SERVICE_FILE_NAME = 'service.yaml';
+
     /**
      * @var WritableRepositoryInterface
      */
@@ -28,17 +31,19 @@ class ComponentServiceFilesProvider
     }
 
     /**
+     * Returns components service files paths.
+     *
      * @return array
      */
     public function getServiceFiles(): array
     {
-        $commandsClasses = [];
+        $paths = [];
         $packages = $this->localRepository->getPackages();
         foreach ($packages as $package) {
-            if (isset($package->getExtra()['oxideshop-component'])) {
-                $path = $package->getTargetDir();
+            if ($package->getType() === 'oxideshop-component') {
+                $paths[] = Path::join($package->getTargetDir(), static::SERVICE_FILE_NAME);
             }
         }
-        return $commandsClasses;
+        return $paths;
     }
 }
