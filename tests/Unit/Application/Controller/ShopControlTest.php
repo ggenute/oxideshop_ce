@@ -381,9 +381,7 @@ class ShopControlTest extends \OxidTestCase
         $sTplPath = $this->getConfig()->getConfigParam('sShopDir') . "/Application/views/";
         $sTplPath .= $this->getConfig()->getConfigParam('sTheme') . "/tpl/page/checkout/basket.tpl";
 
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array("getTemplatePath", "getConfigParam", "pageClose"));
-        $map = [['blLogging', null, true]];
-        $oConfig->expects($this->any())->method('getConfigParam')->will($this->returnValueMap($map));
+        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array("getTemplatePath", "pageClose"));
         $oConfig->expects($this->any())->method('getTemplatePath')->will($this->returnValue($sTplPath));
 
         $aTasks = array("isAdmin", "_log", "_startMonitor", "getConfig", "_stopMonitor", '_getOutputManager', '_getErrors', '_executeMaintenanceTasks');

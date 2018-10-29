@@ -752,7 +752,7 @@ class SessionTest extends \OxidTestCase
         $oConfig->expects($this->never())->method('getShopUrl');
         $oConfig->expects($this->never())->method('getConfigParam');
 
-        $oSession = $this->getMock(\OxidEsales\Eshop\Core\Session::class, array("getConfig"));
+        $oSession = oxNew(\OxidEsales\Eshop\Core\Session::class);
 		\OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $oConfig);
         $this->assertFalse($oSession->UNITcheckCookies(false, array()));
     }
@@ -770,7 +770,7 @@ class SessionTest extends \OxidTestCase
         $oConfig->expects($this->once())->method('getShopUrl')->will($this->returnValue("testurl"));
         $oConfig->expects($this->once())->method('getConfigParam')->with($this->equalTo('iDebug'))->will($this->returnValue(true));
 
-        $oSession = $this->getMock(\OxidEsales\Eshop\Core\Session::class, array("getConfig"));
+        $oSession = oxNew(\OxidEsales\Eshop\Core\Session::class);
 		\OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $oConfig);
         $this->assertTrue($oSession->UNITcheckCookies(false, array("testurl" => "ox_true")));
     }
@@ -1304,9 +1304,8 @@ class SessionTest extends \OxidTestCase
         $oCfg->expects($this->once())->method('getConfigParam')
             ->with($this->equalTo('aRequireSessionWithParams'))
             ->will($this->returnValue(null));
-        $oSess = $this->getMock(\OxidEsales\Eshop\Core\Session::class, array('getConfig'));
-        $oSess->expects($this->once())->method('getConfig')
-            ->will($this->returnValue($oCfg));
+        \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $oCfg);
+        $oSess = oxNew(\OxidEsales\Eshop\Core\Session::class);
         $this->assertEquals(
             array(
                  'cl'          =>
@@ -1346,9 +1345,8 @@ class SessionTest extends \OxidTestCase
                     )
                 )
             );
-        $oSess = $this->getMock(\OxidEsales\Eshop\Core\Session::class, array('getConfig'));
-        $oSess->expects($this->once())->method('getConfig')
-            ->will($this->returnValue($oCfg));
+        \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $oCfg);
+        $oSess = oxNew(\OxidEsales\Eshop\Core\Session::class);
         $this->assertEquals(
             array(
                  'cl'          =>

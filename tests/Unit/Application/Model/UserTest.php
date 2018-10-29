@@ -134,6 +134,8 @@ class UserTest extends \OxidTestCase
      */
     protected function tearDown()
     {
+        parent::tearDown();
+
         $oUser = oxNew('oxUser');
         if ($oUser->loadActiveUser()) {
             $oUser->logout();
@@ -162,8 +164,6 @@ class UserTest extends \OxidTestCase
         // restore database
         $oDbRestore = self::_getDbRestore();
         $oDbRestore->restoreDB();
-
-        parent::tearDown();
     }
 
     /**
@@ -634,12 +634,10 @@ class UserTest extends \OxidTestCase
      */
     public function testNewUserInSubShop()
     {
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getShopId'));
-        $oConfig->expects($this->any())->method('getShopId')->will($this->returnValue(2));
+        $this->markTestSkippedIfNoSubShop();
 
-        $oUser = $this->getMock(\OxidEsales\Eshop\Application\Model\User::class, array('isAdmin', 'getConfig', 'getViewName'), array(), '', false);
+        $oUser = $this->getMock(\OxidEsales\Eshop\Application\Model\User::class, array('isAdmin', 'getViewName'), array(), '', false);
         $oUser->expects($this->any())->method('isAdmin')->will($this->returnValue(true));
-		\OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $oConfig);
         $oUser->expects($this->any())->method('getViewName')->will($this->returnValue('oxuser'));
 
         $oUser->init('oxuser');
