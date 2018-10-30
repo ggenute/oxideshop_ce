@@ -748,9 +748,7 @@ class SessionTest extends \OxidTestCase
     {
         $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array("isSsl", "getSslShopUrl", "getShopUrl", "getConfigParam"));
         $oConfig->expects($this->once())->method('isSsl')->will($this->returnValue(true));
-        $oConfig->expects($this->once())->method('getSslShopUrl')->will($this->returnValue("testsslurl"));
-        $oConfig->expects($this->never())->method('getShopUrl');
-        $oConfig->expects($this->never())->method('getConfigParam');
+        $oConfig->expects($this->any())->method('getSslShopUrl')->will($this->returnValue("testsslurl"));
 
         $oSession = oxNew(\OxidEsales\Eshop\Core\Session::class);
 		\OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $oConfig);
@@ -766,7 +764,6 @@ class SessionTest extends \OxidTestCase
     {
         $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array("isSsl", "getSslShopUrl", "getShopUrl", "getConfigParam"));
         $oConfig->expects($this->once())->method('isSsl')->will($this->returnValue(false));
-        $oConfig->expects($this->never())->method('getSslShopUrl');
         $oConfig->expects($this->once())->method('getShopUrl')->will($this->returnValue("testurl"));
         $oConfig->expects($this->once())->method('getConfigParam')->with($this->equalTo('iDebug'))->will($this->returnValue(true));
 
