@@ -7,6 +7,7 @@
 namespace OxidEsales\EshopCommunity\Internal\Application;
 
 use Composer\Repository\WritableRepositoryInterface;
+use OxidEsales\Facts\Facts;
 use Webmozart\PathUtil\Path;
 
 /**
@@ -15,7 +16,7 @@ use Webmozart\PathUtil\Path;
  */
 class ComponentServiceFilesProvider
 {
-    const SERVICE_FILE_NAME = 'service.yaml';
+    const SERVICE_FILE_NAME = 'services.yaml';
 
     /**
      * @var WritableRepositoryInterface
@@ -23,11 +24,17 @@ class ComponentServiceFilesProvider
     private $localRepository;
 
     /**
+     * @var Facts
+     */
+    private $facts;
+
+    /**
      * @param WritableRepositoryInterface $localRepository
      */
-    public function __construct(WritableRepositoryInterface $localRepository)
+    public function __construct(WritableRepositoryInterface $localRepository, Facts $facts)
     {
         $this->localRepository = $localRepository;
+        $this->facts = $facts;
     }
 
     /**
@@ -41,7 +48,7 @@ class ComponentServiceFilesProvider
         $packages = $this->localRepository->getPackages();
         foreach ($packages as $package) {
             if ($package->getType() === 'oxideshop-component') {
-                $paths[] = Path::join($package->getTargetDir(), static::SERVICE_FILE_NAME);
+                $paths[] = Path::join($this->facts->getVendorPath(), $package->getName(), static::SERVICE_FILE_NAME);
             }
         }
         return $paths;

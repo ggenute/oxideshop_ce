@@ -13,6 +13,7 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Facts\Facts;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
+use Webmozart\PathUtil\Path;
 
 /**
   *
@@ -81,11 +82,14 @@ class ContainerFactory
      */
     private function getCompiledSymfonyContainer()
     {
-        $composer = \Composer\Factory::create(new NullIO());
+        if (getenv('COMPOSER_HOME') === false) {
+            putenv('COMPOSER_HOME=~/');
+        }
+        $composer = \Composer\Factory::create(new NullIO(), Path::join((new Facts())->getShopRootPath(), 'composer.json'));
         $repositoryManager = $composer->getRepositoryManager();
         $containerBuilder = new ContainerBuilder(
             new Facts(),
-            new ComponentServiceFilesProvider($repositoryManager->getLocalRepository())
+            new ComponentServiceFilesProvider($repositoryManager->getLocalRepository(), new Facts())
         );
         $this->symfonyContainer = $containerBuilder->getContainer();
         $this->symfonyContainer->compile();
