@@ -549,8 +549,8 @@ class AdminController extends \OxidEsales\Eshop\Core\Controller\BaseController
      */
     public function getViewId()
     {
-        $sClassName = is_null($this->viewId) ? strtolower(get_class($this)) : $this->viewId;
-
+        $classKey = \OxidEsales\Eshop\Core\Registry::getControllerClassNameResolver()->getIdByClassName(get_class($this));
+        $sClassName = is_null($this->viewId) ? strtolower($classKey) : $this->viewId;
         return $this->getNavigation()->getClassId($sClassName);
     }
 
