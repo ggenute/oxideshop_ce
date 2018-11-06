@@ -80,6 +80,8 @@ class ViewTest extends \OxidTestCase
      */
     protected function tearDown()
     {
+        parent::tearDown();
+
         modOxView::reset();
 
         // restoring
@@ -88,8 +90,6 @@ class ViewTest extends \OxidTestCase
         oxRegistry::getUtils()->seoIsActive(true);
 
         oxTestModules::cleanUp();
-
-        parent::tearDown();
     }
 
     public function testIsDemoShop()
