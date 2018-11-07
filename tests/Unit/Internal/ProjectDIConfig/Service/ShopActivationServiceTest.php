@@ -114,7 +114,7 @@ class ShopActivationServiceTest extends TestCase
 
         $this->service->deActivateServicesForShops($moduleDir, [5,1]);
 
-        $this->assertFalse(array_key_exists('imports', $this->projectYamlArray));
+        $this->assertTrue(array_key_exists('imports', $this->projectYamlArray));
         $this->assertFalse(array_key_exists('services', $this->projectYamlArray));
 
     }
