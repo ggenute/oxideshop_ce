@@ -184,7 +184,14 @@ class DIConfigWrapper
     private function cleanUpConfig()
     {
         $this->removeInactiveServices();
+        $this->removeEmptySections();
+    }
 
+    /**
+     * Removes section entries when they are empty
+     */
+    private function removeEmptySections()
+    {
         $sections = [$this::IMPORTS_SECTION, $this::SERVICE_SECTION];
         foreach ($sections as $section) {
             if (array_key_exists($section, $this->configArray) &&
@@ -193,7 +200,6 @@ class DIConfigWrapper
             }
         }
     }
-
     /**
      *
      */

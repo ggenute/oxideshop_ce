@@ -10,6 +10,7 @@ namespace OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Service;
 use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Dao\ProjectYamlDaoInterface;
 use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\DataObject\DIConfigWrapper;
 use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\DataObject\DIServiceWrapper;
+use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Exception\NoServiceYamlException;
 
 /**
  * @internal
@@ -40,8 +41,9 @@ class ShopActivationService implements ShopActivationServiceInterface
     public function activateServicesForShops(string $moduleDir, array $shopIds)
     {
         $moduleConfigFile = $moduleDir . DIRECTORY_SEPARATOR . 'services.yaml';
-        $moduleConfig = $this->getModuleConfig($moduleConfigFile);
-        if ($moduleConfig === null) {
+        try {
+            $moduleConfig = $this->getModuleConfig($moduleConfigFile);
+        } catch (NoServiceYamlException $e) {
             return;
         }
 
@@ -72,27 +74,21 @@ class ShopActivationService implements ShopActivationServiceInterface
     public function deactivateServicesForShops(string $moduleDir, array $shopIds)
     {
         $moduleConfigFile = $moduleDir . DIRECTORY_SEPARATOR . 'services.yaml';
-        $moduleConfig = $this->getModuleConfig($moduleConfigFile);
-        if ($moduleConfig === null) {
+        try {
+            $moduleConfig = $this->getModuleConfig($moduleConfigFile);
+        } catch (NoServiceYamlException $e) {
             return;
         }
         $projectConfig = $this->dao->loadProjectConfigFile();
 
-        $removeImport = false;
         /** @var DIServiceWrapper $service */
         foreach ($moduleConfig->getServices() as $service) {
             if (! $service->isShopAware()) {
                 continue;
             }
             $service = $projectConfig->getService($service->getKey());
-            $remainingShops = $service->removeActiveShops($shopIds);
-            if (count($remainingShops) == 0) {
-                $removeImport = true;
-            }
+            $service->removeActiveShops($shopIds);
             $projectConfig->addOrUpdateService($service);
-        }
-        if ($removeImport) {
-            $projectConfig->removeImport($moduleConfigFile);
         }
         $this->dao->saveProjectConfigFile($projectConfig);
     }
@@ -101,13 +97,13 @@ class ShopActivationService implements ShopActivationServiceInterface
      * @param string $moduleConfigFile
      *
      * @return DIConfigWrapper
+     * @throws NoServiceYamlException
      */
     private function getModuleConfig(string $moduleConfigFile): DIConfigWrapper
     {
 
         if (! file_exists($moduleConfigFile)) {
-            // Nothing to do. The module does not define services
-            return null;
+            throw new NoServiceYamlException();
         }
         return $this->dao->loadDIConfigFile($moduleConfigFile);
     }
