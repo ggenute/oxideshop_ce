@@ -9,6 +9,11 @@ services:
     autowire: true
     public: false
 
+  OxidEsales\EshopCommunity\Internal\Common\Database\TransactionServiceInterface:
+    class: OxidEsales\EshopCommunity\Internal\Common\Database\TransactionService
+    autowire: true
+    public: false
+
   OxidEsales\EshopCommunity\Internal\Common\Form\FormBuilderInterface:
     class: OxidEsales\EshopCommunity\Internal\Common\Form\FormBuilder
     autowire: true
